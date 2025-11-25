@@ -118,7 +118,7 @@
   /* Candle Gate 4 */
   .candles { display:flex; justify-content:center; gap:8px; margin-bottom:12px; }
   .candle {
-    width:10px; height:50px;
+    width:17px; height:50px;
     background:linear-gradient(#ffe6aa,#ffb84d);
     border-radius:5px; position:relative;
   }
@@ -179,7 +179,7 @@
 
 <div class="wrap">
   <h1>The 8 Gates Adventure</h1>
-  <p>Buka satu per satu secara urut!</p>
+  <p>Open it slowly</p>
 
   <div class="gate-container" id="gateContainer"></div>
   <div class="hint">Buka semua gate untuk melihat hadiah utama.</div>
@@ -193,7 +193,7 @@
   <div class="modal-card">
     <div id="modalVisual"></div>
     <div id="modalText"></div>
-    <button class="btn btn-primary" id="modalClose">Lanjut</button>
+    <button class="btn btn-primary" id="modalClose">Next</button>
   </div>
 </div>
 
@@ -203,20 +203,20 @@
 // --- GLOBAL VOLUME SETUP (tambahkan di sini) ---
 let globalVolume = localStorage.getItem("globalVolume");
 if(globalVolume === null) {
-  globalVolume = 0.4; // default volume
+  globalVolume = 0.8; // default volume
   localStorage.setItem("globalVolume", globalVolume);
 }
 // -----------------------------------------------
 
 const gates = [
-  {id:1,text:"Let the Journey Begin"},
-  {id:2,text:"How's your day?"},
-  {id:3,text:"Your kindness lights up the world, one smile at a time."},
-  {id:4,text:"Make a Wish"},
-  {id:5,text:"Light up your day"},
-  {id:6,text:"Your Presence Makes the World Brighter."},
-  {id:7,text:"Date to Selebrate!"},
-  {id:8,text:"Congratulations! You made it to the final gate!."}
+  {id:1,text:"How's your day?"},
+  {id:2,text:"Hope you're having a good day! Are you feeling happy today?"},
+  {id:3,text:"Every time you smile, you make everyone around you feel awesome, me too!"},
+  {id:4,text:"It's time to wish for something wonderful, go for it!"},
+  {id:5,text:"Your dreams are as wonderful as you are 🫣"},
+  {id:6,text:"Your energy makes everyone around you smile"},
+  {id:7,text:"Your Special Day: February 8! 🎉"},
+  {id:8,text:"Congratulations! You made it to the final gate!"}
 ];
 
 const gateContainer = document.getElementById('gateContainer');
@@ -286,7 +286,7 @@ function showModalFor(id){
   if(id===4){
     const box = document.createElement('div');
     box.className='candles';
-    for(let i=0;i<7;i++){
+    for(let i=0;i<5;i++){
       const c = document.createElement('div');
       c.className='candle';
       box.appendChild(c);
@@ -340,7 +340,7 @@ function typeText(text,speed=40){
   type();
 }
 
-function launchConfetti(count=30){
+function launchConfetti(count=100){
   const colors=['#ffd1dc','#ffd89b','#c8f7ff','#b9fbc0','#f6c3ff','#fff1a8','#ffd6ff','#cfe9ff'];
   for(let i=0;i<count;i++){
     const node=document.createElement('i');
