@@ -203,8 +203,10 @@
 // --- GLOBAL VOLUME SETUP (tambahkan di sini) ---
 let globalVolume = localStorage.getItem("globalVolume");
 if(globalVolume === null) {
-  globalVolume = 1; // default volume
+  globalVolume = 1; // default
   localStorage.setItem("globalVolume", globalVolume);
+} else {
+  globalVolume = parseFloat(globalVolume); // pastikan tipe number
 }
 // -----------------------------------------------
 
@@ -251,16 +253,15 @@ function startAudio() {
   bgAudio.volume = 0;
   bgAudio.play().catch(()=>{});
 
-  let vol = 0;
+  const step = 0.01; // kenaikan volume per interval
+  const interval = 20; // tiap 20ms
   const fadeIn = setInterval(()=>{
-    if (vol < globalVolume) {
-      vol += 0.2;
-      bgAudio.volume = vol;
+    if(bgAudio.volume < globalVolume){
+      bgAudio.volume = Math.min(bgAudio.volume + step, globalVolume);
     } else {
-      bgAudio.volume = globalVolume;
       clearInterval(fadeIn);
     }
-  }, 100);
+  }, interval);
 }
 
 function openGate(id, el){
