@@ -171,6 +171,19 @@
       grid-template-columns: repeat(3, 70px);
     }
   }
+  /* Watermark sederhana di bawah halaman */
+.watermark {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  padding: 6px 0;
+  pointer-events: none;
+  font-family: "Comic Sans MS", sans-serif;
+  text-align: center;
+}
 
 </style>
 </head>
@@ -182,7 +195,11 @@
   <p>Open it slowly and read it carefully - Enjoy your day!</p>
 
   <div class="gate-container" id="gateContainer"></div>
-  <div class="hint">If can't touch you can refresh the website, down your volume if it arrives at gate 7</div>
+  <div class="hint">If a gate is unclickable, refresh the page. Lower your volume at Gate 7. And don't skip at all</div>
+  <!-- Watermark -->
+<div class="watermark">
+  Made with ❤️ by Vino
+</div>
 </div>
 
 <!-- Audio -->
