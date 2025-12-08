@@ -1,3 +1,4 @@
+<!-- ======================= HTML ======================= -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adventure</title>
 
+<!-- ======================= CSS ======================= -->
 <style>
   * { box-sizing: border-box; margin:0; padding:0; font-family:"Comic Sans MS", sans-serif; }
 
-  /* Mencegah scroll kanan kiri */
   html, body { overflow-x: hidden; }
   * { max-width: 100%; }
 
@@ -27,7 +28,6 @@
   h1 { font-size:36px; margin-bottom:16px; text-shadow:0 0 12px #ffccff; }
   p { margin-bottom:24px; color:#ccc; }
 
-  /* gate grid */
   .gate-container {
     display:grid;
     grid-template-columns:repeat(4,100px);
@@ -57,7 +57,6 @@
   .gate.open { transform:scale(1.1); border-color: rgba(255,255,255,0.15); box-shadow:0 14px 28px rgba(255,180,255,0.5); }
   .gate.disabled { opacity:0.3; cursor:not-allowed; }
 
-  /* glow effects */
   .flash {
     position:absolute;
     inset:0;
@@ -70,7 +69,6 @@
   }
   .gate.opening .flash { opacity:1; transform:scale(1.5); }
 
-  /* modal */
   .modal {
     position:fixed; inset:0;
     display:flex; justify-content:center; align-items:center;
@@ -115,7 +113,6 @@
     to { transform:translateY(120vh) rotate(540deg); opacity:1; }
   }
 
-  /* Candle Gate 4 */
   .candles { display:flex; justify-content:center; gap:8px; margin-bottom:12px; }
   .candle {
     width:17px; height:50px;
@@ -135,7 +132,6 @@
     50% { transform:translateX(-50%) scale(1.25); opacity:1; }
   }
 
-  /* Gate7 Glow */
   .glow-eight {
     font-size:72px; font-weight:900;
     text-shadow:0 0 20px #fff,0 0 40px #ffbaff,0 0 80px #ff88ff;
@@ -147,44 +143,70 @@
     50% { opacity:1; }
   }
 
-  /* -------------------- RESPONSIVE -------------------- */
-
-  /* HP normal */
   @media (max-width: 480px) {
-    .gate-container {
-      grid-template-columns: repeat(4, 70px);
-      gap: 12px;
-    }
-    .gate {
-      width: 70px;
-      height: 70px;
-      font-size: 20px;
-      border-radius: 10px;
-    }
+    .gate-container { grid-template-columns: repeat(4, 70px); gap: 12px; }
+    .gate { width: 70px; height: 70px; font-size: 20px; border-radius: 10px; }
     h1 { font-size: 28px; }
     p { font-size: 14px; }
   }
 
-  /* HP sangat kecil → 3 kolom */
   @media (max-width: 400px) {
-    .gate-container {
-      grid-template-columns: repeat(3, 70px);
-    }
+    .gate-container { grid-template-columns: repeat(3, 70px); }
   }
-  /* Watermark sederhana di bawah halaman */
-.watermark {
+
+  .watermark {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    padding: 6px 0;
+    pointer-events: none;
+    font-family: "Comic Sans MS", sans-serif;
+    text-align: center;
+  }
+
+
+/* ========================================================= */
+/* ================== SLIDER VOLUME NEON =================== */
+/* ========================================================= */
+
+#volumeBox {
   position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  padding: 6px 0;
-  pointer-events: none;
-  font-family: "Comic Sans MS", sans-serif;
-  text-align: center;
+  bottom: 22px;
+  right: 22px;
+  background: rgba(255, 0, 255, 0.12);
+  padding: 12px 18px;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px #ff00ff, 0 0 30px #ff00ff55;
+  z-index: 9999;
+  border: 1px solid rgba(255, 0, 255, 0.4);
 }
 
+#volumeSlider {
+  width: 160px;
+  height: 8px;
+  appearance: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ff7eb3 50%, #ffffff33 50%);
+  outline: none;
+  cursor: pointer;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #ff7eb3;
+  box-shadow:
+    0 0 10px #ff7eb3,
+    0 0 20px #ff00ff,
+    0 0 40px #ff00ff;
+}
 </style>
 </head>
 
@@ -196,16 +218,19 @@
 
   <div class="gate-container" id="gateContainer"></div>
   <div class="hint">If a gate is unclickable, refresh the page. Adjust your volume to enjoy. And don't skip at all</div>
-  <!-- Watermark -->
-<div class="watermark">
-  Made with ❤️ by v
-</div>
+
+  <div class="watermark">Made with ❤️ by v</div>
 </div>
 
-<!-- Audio -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<!-- Modal -->
+<!-- ========================================================= -->
+<!-- ================ NEON VOLUME SLIDER HTML ================ -->
+<!-- ========================================================= -->
+<div id="volumeBox">
+  <input type="range" id="volumeSlider" min="0" max="100">
+</div>
+
 <div class="modal" id="modal">
   <div class="modal-card">
     <div id="modalVisual"></div>
@@ -216,16 +241,41 @@
 
 <div class="confetti" id="confetti"></div>
 
+<!-- ======================= JAVASCRIPT ======================= -->
 <script>
-// --- GLOBAL VOLUME SETUP (tambahkan di sini) ---
+// --- GLOBAL VOLUME SETUP ---
 let globalVolume = localStorage.getItem("globalVolume");
 if(globalVolume === null) {
-  globalVolume = 1; // default
+  globalVolume = 1;
   localStorage.setItem("globalVolume", globalVolume);
 } else {
-  globalVolume = parseFloat(globalVolume); // pastikan tipe number
+  globalVolume = parseFloat(globalVolume);
 }
-// -----------------------------------------------
+
+const volumeSlider = document.getElementById("volumeSlider");
+
+volumeSlider.value = globalVolume * 100;
+
+function updateSliderBar(value) {
+  const percent = value;
+  volumeSlider.style.background =
+    `linear-gradient(90deg, #ff7eb3 ${percent}%, #ffffff33 ${percent}%)`;
+}
+
+updateSliderBar(volumeSlider.value);
+
+volumeSlider.addEventListener("input", () => {
+  let vol = volumeSlider.value / 100;
+  globalVolume = vol;
+  bgAudio.volume = vol;
+
+  localStorage.setItem("globalVolume", vol);
+  updateSliderBar(volumeSlider.value);
+});
+
+// =========================================================
+// ================ ORIGINAL JAVASCRIPT ====================
+// =========================================================
 
 const gates = [
   {id:1,text:"How's your day?"},
@@ -249,7 +299,6 @@ const bgAudio = document.getElementById('bgMusic');
 let currentGate = 1;
 let audioStarted = false;
 
-// generate gates
 for(let g of gates){
   const el = document.createElement('div');
   el.className = 'gate';
@@ -270,8 +319,8 @@ function startAudio() {
   bgAudio.volume = 0;
   bgAudio.play().catch(()=>{});
 
-  const step = 0.01; // kenaikan volume per interval
-  const interval = 20; // tiap 20ms
+  const step = 0.01;
+  const interval = 20;
   const fadeIn = setInterval(()=>{
     if(bgAudio.volume < globalVolume){
       bgAudio.volume = Math.min(bgAudio.volume + step, globalVolume);
