@@ -228,13 +228,13 @@
 <!-- ================ NEON VOLUME SLIDER HTML ================ -->
 <!-- ========================================================= -->
 <div id="volumeBox">
-  <input type="range" id="volumeSlider" min="0" max="100">
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
 </div>
 
 <div class="modal" id="modal">
   <div class="modal-card">
     <div id="modalVisual"></div>
-    <div id="modalText"></div>
+    <div id="modalText"></div>  
     <button class="btn btn-primary" id="modalClose">Next</button>
   </div>
 </div>
@@ -286,10 +286,21 @@ function initAudioContextIfNeeded() {
   // sync slider visual
   const vs = document.getElementById('volumeSlider');
   if (vs) {
-    vs.value = initial * 100;
-    updateSliderBar(vs.value);
+    vs.value = initial;
+    updateSliderBar(initial * 100); // kalau garis neon tetap butuh 0–100
   }
 }
+
+// === EVENT SLIDER — TEMPATKAN PERSIS DI SINI ===
+document.getElementById('volumeSlider')?.addEventListener('input', function () {
+  const vol = Number(this.value); // 0–1
+  if (gainNode) {
+    gainNode.gain.value = vol;
+  }
+
+  localStorage.setItem('globalVolume', vol);
+  updateSliderBar(vol * 100);
+});
 
 // Fungsi safe untuk memulai audio — fade-in hanya sekali
 function startAudio() {
