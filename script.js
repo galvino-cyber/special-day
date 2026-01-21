@@ -93,12 +93,12 @@ document.addEventListener('click', initAudioContextIfNeeded, { once: true });
 // GATE DATA
 // ===============================
 const gates = [
-  {id:1,text:"How's your day?"},
+  {id:1,text:"Helloo 👋, how's your day?"},
   {id:2,text:"Hope you're having a good day! Are you feeling happy today?"},
-  {id:3,text:"I hope today feels happy for you"},
+  {id:3,text:"I hope today feels happy for you 🙇‍♂️"},
   {id:4,text:"As the candles glow, take a moment to think about your wishes and dreams"},
   {id:5,text:"Whatever it is, your dreams are as beautiful as who you are 🫣"},
-  {id:6,text:"You inspire me to be better than I was yesterday"},
+  {id:6,text:"You inspire me to be better than I was yesterday 🙌"},
   {id:7,text:"Your Special Day: February 8! 🎉"},
   {id:8,text:"Congratulations! Here We Go!"}
 ];
