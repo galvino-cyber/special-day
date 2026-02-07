@@ -192,7 +192,7 @@ function showModalFor(id) {
         document.body.style.transition = "opacity 3s ease";
         document.body.style.opacity = 0;
         setTimeout(() => {
-          window.location.href = "https://galvino-cyber.github.io/ucapan/";
+          window.location.href = "https://galvino-dev.github.io/ucapan/";
         }, 3000);
       });
     });
