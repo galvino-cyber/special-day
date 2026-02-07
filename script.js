@@ -100,7 +100,7 @@ const gates = [
   {id:5,text:"Whatever it is, your dreams are as beautiful as who you are 🫣"},
   {id:6,text:"You inspire me to be better than I was yesterday 🙌"},
   {id:7,text:"Your Special Day: February 8! 🎉"},
-  {id:8,text:"Congratulations! Here We Go!"}
+  {id:8,text:"Here We Go!"}
 ];
 
 // ===============================
